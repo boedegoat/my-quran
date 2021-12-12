@@ -4,7 +4,7 @@ import Navbar from './Navbar'
 
 export default function Layout({ title, children }) {
   return (
-    <div className=''>
+    <>
       <Head>
         <title>My Quran - {title}</title>
       </Head>
@@ -19,10 +19,10 @@ export default function Layout({ title, children }) {
         </div>
       </header>
 
-      <main className='grid mx-auto my-5 pb-20 max-w-5xl sm:grid-cols-3 sm:mt-10 sm:pb-0'>
+      <main className='wrapper flex my-5 pb-20 sm:mt-10 sm:pb-0 sm:space-x-5'>
         <Navbar />
-        <div className='px-5 sm:pl-0 sm:col-span-2'>{children}</div>
+        <div className='flex-grow'>{children}</div>
       </main>
-    </div>
+    </>
   )
 }
