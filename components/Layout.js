@@ -12,12 +12,14 @@ export default function Layout({ title, children }) {
       <header className='py-4 sticky top-0 bg-white border-b shadow-sm'>
         <div className='wrapper'>
           <Link href='/'>
-            <a className='font-bold text-2xl'>My Quran</a>
+            <a>
+              <h1 className='text-slate-900 font-bold text-2xl'>My Quran</h1>
+            </a>
           </Link>
         </div>
       </header>
 
-      <main className='grid sm:grid-cols-3 max-w-5xl mx-auto mt-5 sm:mt-8'>
+      <main className='grid mx-auto my-5 pb-20 max-w-5xl sm:grid-cols-3 sm:mt-10 sm:pb-0'>
         <Navbar />
         <div className='px-5 sm:pl-0 sm:col-span-2'>{children}</div>
       </main>
