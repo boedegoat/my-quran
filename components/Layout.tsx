@@ -1,5 +1,6 @@
 import Head from 'next/head'
 import Link from 'next/link'
+import AuthButton from './AuthButton'
 import Navbar from './Navbar'
 
 export default function Layout({ title, children }) {
@@ -10,12 +11,13 @@ export default function Layout({ title, children }) {
       </Head>
 
       <header className='py-4 sticky top-0 bg-white border-b shadow-sm'>
-        <div className='wrapper'>
+        <div className='wrapper flex justify-between items-center'>
           <Link href='/'>
             <a>
               <h1 className='text-slate-900 font-bold text-2xl'>My Quran</h1>
             </a>
           </Link>
+          <AuthButton />
         </div>
       </header>
 

@@ -1,20 +1,11 @@
 import BigLink from 'components/BigLink'
+import Greeting from 'components/Greeting'
 import Layout from 'components/Layout'
-import { useTimeGreeting } from 'hooks'
-
-const testUser = {
-  name: 'Bhremada',
-}
 
 export default function Home() {
-  const greeting = useTimeGreeting()
-
   return (
     <Layout title='Home'>
-      <p className='font-medium text-slate-600 text-lg'>
-        👋 {greeting} <span className='text-slate-900 font-bold'>{testUser.name}</span>
-      </p>
-
+      <Greeting />
       <section className='mt-5 shadow-md p-5 rounded-lg'>
         <h1 className='text-xs mb-2'>
           📜 <span className='text-slate-500 font-bold uppercase'>Quote of the day</span>
@@ -23,8 +14,7 @@ export default function Home() {
           “Do not lose hope, nor be sad.” - Quran 3:139
         </h1>
       </section>
-
-      <div className='grid mt-5 grid-cols-2 grid-rows-2 gap-5'>
+      <div className='grid mt-5 sm:grid-cols-2 sm:grid-rows-2 gap-5'>
         <BigLink
           className='row-span-full'
           href='/read-quran'

@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-export default function BigLink({ href, className, emoji, label, description }) {
+export default function BigLink({ href, className = '', emoji, label, description }) {
   return (
     <Link href={href}>
       <a className={`shadow-md p-5 rounded-lg ${className}`}>
