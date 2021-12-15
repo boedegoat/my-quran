@@ -1,4 +1,11 @@
 import { signIn, signOut, useSession } from 'next-auth/react'
+import {
+  UserIcon,
+  InformationCircleIcon,
+  ExternalLinkIcon,
+  CurrencyDollarIcon,
+  MoonIcon,
+} from '@heroicons/react/solid'
 import Image from 'next/image'
 import Dropdown from './Dropdown'
 
@@ -20,17 +27,26 @@ export default function AuthButton() {
         }
       >
         <Dropdown.Group>
-          <Dropdown.Item type='button'>Dark Theme</Dropdown.Item>
-          <Dropdown.Item type='link' href='/profile'>
+          <Dropdown.Item type='button' Icon={MoonIcon}>
+            Dark Theme
+          </Dropdown.Item>
+          <Dropdown.Item type='link' href='/profile' Icon={UserIcon}>
             Profile
           </Dropdown.Item>
-          <Dropdown.Item type='link' href='/about'>
+          <Dropdown.Item type='link' href='/about' Icon={InformationCircleIcon}>
             About
           </Dropdown.Item>
-          <Dropdown.Item type='button'>Donate</Dropdown.Item>
+          <Dropdown.Item type='button' Icon={CurrencyDollarIcon}>
+            Donate
+          </Dropdown.Item>
         </Dropdown.Group>
         <Dropdown.Group>
-          <Dropdown.Item type='button' onClick={() => signOut()} danger>
+          <Dropdown.Item
+            type='button'
+            onClick={() => signOut()}
+            danger
+            Icon={ExternalLinkIcon}
+          >
             Sign Out
           </Dropdown.Item>
         </Dropdown.Group>
