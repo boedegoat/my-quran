@@ -6,9 +6,7 @@ import { IItem } from 'typings/component'
 const Dropdown = ({ children, toggler }) => {
   return (
     <HeadlessMenu as='div' className='relative inline-block text-left'>
-      <div>
-        <HeadlessMenu.Button>{toggler}</HeadlessMenu.Button>
-      </div>
+      <HeadlessMenu.Button>{toggler}</HeadlessMenu.Button>
 
       <Transition
         as={Fragment}
