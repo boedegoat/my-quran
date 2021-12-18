@@ -1,7 +1,8 @@
 import Head from 'next/head'
-import Link from 'next/link'
 import AuthButton from './AuthButton'
 import Navbar from './Navbar'
+import NextLink from './NextLink'
+import MotionContainer from 'components/MotionContainer'
 
 export default function Layout({ title, children }) {
   return (
@@ -12,18 +13,16 @@ export default function Layout({ title, children }) {
 
       <header className='py-4 sticky top-0 bg-white border-b shadow-sm'>
         <div className='wrapper flex justify-between items-center'>
-          <Link href='/'>
-            <a>
-              <h1 className='text-slate-900 font-bold text-2xl'>My Quran</h1>
-            </a>
-          </Link>
+          <NextLink href='/'>
+            <h1 className='text-slate-900 font-bold text-2xl'>My Quran</h1>
+          </NextLink>
           <AuthButton />
         </div>
       </header>
 
       <main className='wrapper flex my-5 pb-20 sm:mt-10 sm:pb-0 sm:space-x-5'>
         <Navbar />
-        <div className='flex-grow'>{children}</div>
+        <MotionContainer className='flex-grow'>{children}</MotionContainer>
       </main>
     </>
   )

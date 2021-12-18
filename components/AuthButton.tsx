@@ -8,6 +8,8 @@ import {
 } from '@heroicons/react/solid'
 import Image from 'next/image'
 import Dropdown from './Dropdown'
+import { motion } from 'framer-motion'
+import { buttonVariants } from 'lib/animations'
 
 export default function AuthButton() {
   const { data: session, status } = useSession()
@@ -54,12 +56,15 @@ export default function AuthButton() {
     )
   }
   return (
-    <button
-      className='px-5 py-1 bg-slate-800 text-white rounded-md transition-all hover:scale-105 active:scale-95'
+    <motion.button
+      className='px-5 py-1 bg-slate-800 text-white rounded-md'
+      variants={buttonVariants}
+      whileHover='hover'
+      whileTap='tap'
       onClick={() => signIn()}
     >
       Sign In
-    </button>
+    </motion.button>
   )
 }
 
