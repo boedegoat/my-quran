@@ -10,7 +10,7 @@ import { useRouter } from 'next/router'
 
 export default function Navbar() {
   return (
-    <nav className='px-5 pb-5 bg-white fixed bottom-0 left-0 right-0 h-20 sm:p-0 sm:col-span-1 sm:max-w-max sm:sticky sm:top-[105px] lg:min-w-[18rem]'>
+    <nav className='px-5 pb-5 bg-white z-40 fixed bottom-0 left-0 right-0 h-20 sm:p-0 sm:col-span-1 sm:max-w-max sm:sticky sm:top-[110px] lg:min-w-[18rem]'>
       <div className='bg-slate-900 h-full rounded-lg p-4 flex items-center sm:flex-col sm:h-auto sm:items-stretch sm:space-y-2 sm:p-3'>
         <NavbarLink href='/' label='Home' Logo={HomeIcon} Active={HomeIconSolid} />
         <NavbarLink

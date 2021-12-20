@@ -6,12 +6,12 @@ export default function BigLink({ href, className = '', emoji, label, descriptio
     <MotionNextLink
       variants={homeChildVariants}
       href={href}
-      className={`shadow-md p-5 rounded-lg ${className}`}
+      className={`shadow-md p-5 rounded-lg bg-white ${className}`}
     >
-      <h1 className='text-2xl mb-2'>
-        {emoji} <span className='text-slate-900 font-bold'>{label}</span>
+      <h1 className='text-lg sm:text-2xl mb-2 flex items-center'>
+        {emoji} <div className='text-slate-900 font-bold w-full ml-2'>{label}</div>
       </h1>
-      <p className='text-slate-500'>{description}</p>
+      <p className='text-sm sm:text-base text-slate-500'>{description}</p>
     </MotionNextLink>
   )
 }

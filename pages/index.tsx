@@ -10,7 +10,7 @@ export default function Home() {
       <Greeting />
       <motion.section
         variants={homeChildVariants}
-        className='mt-5 shadow-md p-5 rounded-lg'
+        className='mt-5 shadow-md p-5 rounded-lg bg-white'
       >
         <h1 className='text-xs mb-2'>
           📜 <span className='text-slate-500 font-bold uppercase'>Quote of the day</span>
