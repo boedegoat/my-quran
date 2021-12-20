@@ -1,16 +1,18 @@
 import BigLink from 'components/BigLink'
 import Layout from 'components/Layout'
-import prisma from 'lib/prisma'
+import { fetchMyApi } from 'lib/utils'
 
 export async function getStaticProps() {
-  const allSurah = await prisma.surah.findMany()
+  const allSurah = await fetchMyApi('/surah')
+  const firstVerses = await fetchMyApi('/juz')
+
   return {
-    props: { allSurah },
+    props: { allSurah, firstVerses },
   }
 }
 
-export default function ReadQuran({ allSurah }) {
-  console.log(allSurah)
+export default function ReadQuran({ allSurah, firstVerses }) {
+  console.log(firstVerses)
   return (
     <Layout title='Read Quran'>
       <h1>Read quran</h1>

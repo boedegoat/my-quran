@@ -1,5 +1,6 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["filterJson"]
 }
 
 datasource db {
@@ -21,15 +22,16 @@ model Surah {
 }
 
 model Verse {
-  id          Int   @id
-  inSurah     Int
-  surahId     Int   @map("surah_id")
-  meta        Json
-  text        Json
-  translation Json
-  audio       Json
-  tafsir      Json
-  surah       Surah @relation(fields: [surahId], references: [id])
+  id              Int     @id
+  inSurah         Int
+  surahId         Int     @map("surah_id")
+  firstVerseInJuz Boolean @map("first_verse_in_juz")
+  meta            Json
+  text            Json
+  translation     Json
+  audio           Json
+  tafsir          Json
+  surah           Surah   @relation(fields: [surahId], references: [id])
 
   @@map("verses")
 }

@@ -5,6 +5,7 @@ const prisma = new PrismaClient()
 async function main() {
   const allSurah = await getAllSurah()
   let allVerses = []
+  let currentJuz
 
   // seed all surah (114)
   await prisma.surah.createMany({
@@ -15,11 +16,14 @@ async function main() {
       const extendedVerses = surah.verses.map((verse) => {
         const id = verse.number.inQuran
         const inSurah = verse.number.inSurah
+        const firstVerseInJuz = verse.meta.juz !== currentJuz
+        currentJuz = verse.meta.juz
         delete verse.number
         return {
           id,
           inSurah,
           surahId,
+          firstVerseInJuz,
           ...verse,
         }
       })
