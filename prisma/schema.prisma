@@ -7,24 +7,31 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model Account {
-  id                 String  @id @default(cuid())
-  userId             String  @map("user_id")
-  type               String
-  provider           String
-  providerAccountId  String  @map("provider_account_id")
-  refresh_token      String?
-  access_token       String?
-  expires_at         Int?
-  token_type         String?
-  scope              String?
-  id_token           String?
-  session_state      String?
+model Surah {
+  id             Int     @id
+  sequence       Int
+  numberOfVerses Int     @map("number_of_verses")
+  name           Json
+  revelation     Json
+  tafsir         Json
+  preBismillah   Json?
+  verses         Verse[]
 
-  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+  @@map("surahs")
+}
 
-  @@unique([provider, providerAccountId])
-  @@map("accounts")
+model Verse {
+  id          Int   @id
+  inSurah     Int
+  surahId     Int   @map("surah_id")
+  meta        Json
+  text        Json
+  translation Json
+  audio       Json
+  tafsir      Json
+  surah       Surah @relation(fields: [surahId], references: [id])
+
+  @@map("verses")
 }
 
 model User {
@@ -37,6 +44,26 @@ model User {
   sessions      Session[]
 
   @@map("users")
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String  @map("user_id")
+  type              String
+  provider          String
+  providerAccountId String  @map("provider_account_id")
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+  @@map("accounts")
 }
 
 model Session {
