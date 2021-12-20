@@ -2,14 +2,14 @@ import BigLink from 'components/BigLink'
 import Greeting from 'components/Greeting'
 import Layout from 'components/Layout'
 import { motion } from 'framer-motion'
-import { homeChildVariants } from 'lib/animations'
+import { childVariants } from 'lib/animations'
 
 export default function Home() {
   return (
     <Layout title='Home'>
       <Greeting />
       <motion.section
-        variants={homeChildVariants}
+        variants={childVariants}
         className='mt-5 shadow-md p-5 rounded-lg bg-white'
       >
         <h1 className='text-xs mb-2'>

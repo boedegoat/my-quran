@@ -17,9 +17,19 @@ export const containerVariants = {
   },
 }
 
-export const homeChildVariants = {
+export const childVariants = {
   hidden: { y: 20, opacity: 0 },
   visible: { y: 0, opacity: 1 },
+}
+
+export const linkVariants = {
+  ...childVariants,
+  hover: {
+    scale: 1.05,
+  },
+  tap: {
+    scale: 0.98,
+  },
 }
 
 export const buttonVariants = {
