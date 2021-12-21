@@ -21,8 +21,9 @@ export default function ReadQuran({ allSurah, firstVerses }) {
     <Layout title='Read Quran'>
       <TabGroup>
         <TabGroup.Head className='flex p-1 space-x-1 bg-slate-300/50 rounded-xl'>
-          {Object.keys(categories).map((category) => (
+          {Object.keys(categories).map((category, idx) => (
             <TabGroup.Tab
+              key={idx}
               className={({ selected }) =>
                 classNames(
                   'w-full py-2.5 text-sm leading-5 font-medium rounded-lg',
