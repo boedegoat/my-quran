@@ -4,11 +4,9 @@ import Layout from 'components/Layout'
 import MotionNextLink from 'components/MotionNextLink'
 import { motion } from 'framer-motion'
 import { childVariants, linkVariants } from 'lib/animations'
-import { fetchMyApi } from 'lib/utils'
+import prisma from 'lib/prisma'
 
 export default function Surah({ surah }) {
-  console.log(surah)
-
   const originEmoji = surah.revelation.arab === 'مكة' ? '🕋' : '🕌'
 
   return (
@@ -83,7 +81,9 @@ export default function Surah({ surah }) {
 }
 
 export async function getStaticPaths() {
-  const surahIds = await fetchMyApi('/surah?select=id')
+  const surahIds = await prisma.surah.findMany({
+    select: { id: true },
+  })
   const paths = surahIds.map(({ id }) => ({
     params: { id: id.toString() },
   }))
@@ -96,7 +96,12 @@ export async function getStaticPaths() {
 export async function getStaticProps({ params }) {
   const { id: surahId } = params
 
-  const surah = await fetchMyApi(`/surah/${surahId}`)
+  const surah = await prisma.surah.findUnique({
+    where: { id: Number(surahId) },
+    include: {
+      verses: { orderBy: { inSurah: 'asc' } },
+    },
+  })
 
   return {
     props: { surah },

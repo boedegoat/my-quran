@@ -1,18 +1,10 @@
 import BigLink from 'components/BigLink'
 import Layout from 'components/Layout'
 import TabGroup from 'components/Tab'
-import { classNames, fetchMyApi } from 'lib/utils'
-
-export async function getStaticProps() {
-  const allSurah = await fetchMyApi('/surah')
-  const firstVerses = await fetchMyApi('/juz')
-  return {
-    props: { allSurah, firstVerses },
-  }
-}
+import prisma from 'lib/prisma'
+import { classNames } from 'lib/utils'
 
 export default function ReadQuran({ allSurah, firstVerses }) {
-  console.log(firstVerses)
   const categories = {
     Surah: allSurah,
     Juz: firstVerses,
@@ -113,4 +105,31 @@ function SurahDescription({ name, revelation, numberOfVerses }) {
       {origin} {name.translation.id} | {numberOfVerses} ayat
     </>
   )
+}
+
+export async function getStaticProps() {
+  const allSurah = await prisma.surah.findMany({
+    select: {
+      id: true,
+      name: true,
+      revelation: true,
+      numberOfVerses: true,
+    },
+  })
+  const firstVerses = await prisma.verse.findMany({
+    where: { firstVerseInJuz: true },
+    select: {
+      inSurah: true,
+      meta: true,
+      surah: {
+        select: { name: true },
+      },
+    },
+    orderBy: {
+      id: 'asc',
+    },
+  })
+  return {
+    props: { allSurah, firstVerses },
+  }
 }
