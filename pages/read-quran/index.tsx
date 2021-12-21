@@ -24,17 +24,21 @@ export default function ReadQuran({ allSurah, firstVerses }) {
                 key={idx}
                 className='grid sm:grid-cols-2 sm:grid-rows-2 gap-5'
               >
-                {category === 'Surah' ? (
-                  <SurahContents contents={contents} />
-                ) : (
-                  <JuzContents contents={contents} />
-                )}
+                <Contents {...{ category, contents }} />
               </TabGroup.Content>
             )
           })}
         </TabGroup.Contents>
       </TabGroup>
     </Layout>
+  )
+}
+
+function Contents({ category, contents }) {
+  return category === 'Surah' ? (
+    <SurahContents contents={contents} />
+  ) : (
+    <JuzContents contents={contents} />
   )
 }
 
