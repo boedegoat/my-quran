@@ -1,8 +1,8 @@
 import Head from 'next/head'
 import AuthButton from './AuthButton'
+import MotionContainer from './MotionContainer'
 import Navbar from './Navbar'
-import NextLink from './NextLink'
-import MotionContainer from 'components/MotionContainer'
+import NextLink from 'components/global/NextLink'
 
 export default function Layout({ title, children }) {
   return (

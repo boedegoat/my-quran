@@ -1,8 +1,8 @@
-import BigLink from 'components/BigLink'
-import Layout from 'components/Layout'
-import TabGroup from 'components/Tab'
+import BigLink from 'components/global/BigLink'
+import Layout from 'components/global/layout'
+import TabGroup from 'components/global/Tab'
+import { useRevelation } from 'hooks'
 import prisma from 'lib/prisma'
-import { classNames } from 'lib/utils'
 
 export default function ReadQuran({ allSurah, firstVerses }) {
   const categories = {
@@ -12,25 +12,12 @@ export default function ReadQuran({ allSurah, firstVerses }) {
   return (
     <Layout title='Read Quran'>
       <TabGroup>
-        <TabGroup.Head className='flex p-1 space-x-1 bg-slate-300/50 rounded-xl'>
+        <TabGroup.Head>
           {Object.keys(categories).map((category, idx) => (
-            <TabGroup.Tab
-              key={idx}
-              className={({ selected }) =>
-                classNames(
-                  'w-full py-2.5 text-sm leading-5 font-medium rounded-lg',
-                  'focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-slate-200 focus:ring-slate-400',
-                  selected
-                    ? 'bg-slate-900 text-slate-100 shadow'
-                    : 'text-slate-900 hover:bg-slate-300/70'
-                )
-              }
-            >
-              {category}
-            </TabGroup.Tab>
+            <TabGroup.Tab key={idx}>{category}</TabGroup.Tab>
           ))}
         </TabGroup.Head>
-        <TabGroup.Contents className='mt-5'>
+        <TabGroup.Contents>
           {Object.entries(categories).map(([category, contents], idx) => {
             return (
               <TabGroup.Content
@@ -97,12 +84,10 @@ function SurahName({ name }) {
 }
 
 function SurahDescription({ name, revelation, numberOfVerses }) {
-  const origin = revelation.arab === 'مكة' ? '🕋' : '🕌'
-  // 🕋 => Makkiyah
-  // 🕌 => Madaniyyah
+  const revelationEmoji = useRevelation(revelation.arab)
   return (
     <>
-      {origin} {name.translation.id} | {numberOfVerses} ayat
+      {revelationEmoji} {name.translation.id} | {numberOfVerses} ayat
     </>
   )
 }

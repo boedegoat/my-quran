@@ -7,7 +7,7 @@ import {
   MoonIcon,
 } from '@heroicons/react/solid'
 import Image from 'next/image'
-import Dropdown from './Dropdown'
+import Dropdown from 'components/global/Dropdown'
 import { motion } from 'framer-motion'
 import { buttonVariants } from 'lib/animations'
 

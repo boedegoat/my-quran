@@ -1,13 +1,16 @@
 import { ChevronLeftIcon, MenuAlt3Icon } from '@heroicons/react/outline'
 import { DotsVerticalIcon } from '@heroicons/react/solid'
-import Layout from 'components/Layout'
-import MotionNextLink from 'components/MotionNextLink'
+import Layout from 'components/global/layout'
+import MotionNextLink from 'components/global/MotionNextLink'
 import { motion } from 'framer-motion'
 import { childVariants, linkVariants } from 'lib/animations'
 import prisma from 'lib/prisma'
+import { useRevelation, useToggle } from 'hooks'
+import SurahMenu from 'components/read-quran/SurahMenu'
 
-export default function Surah({ surah }) {
-  const originEmoji = surah.revelation.arab === 'مكة' ? '🕋' : '🕌'
+export default function Surah({ surah, allSurah }) {
+  const [menuOpen, toggleMenuOpen] = useToggle(false)
+  const revelationEmoji = useRevelation(surah.revelation.arab)
 
   return (
     <Layout title='surah'>
@@ -24,9 +27,17 @@ export default function Surah({ surah }) {
         >
           <ChevronLeftIcon className='w-4 h-4 mr-2' /> Back to Read Quran
         </MotionNextLink>
-        <button className='p-1 bg-slate-600 text-slate-50 rounded-md hover:bg-slate-800'>
+        <button
+          onClick={() => toggleMenuOpen(true)}
+          className='p-1 bg-slate-600 text-slate-50 rounded-md hover:bg-slate-800'
+        >
           <MenuAlt3Icon className='w-5 h-5' />
         </button>
+        <SurahMenu
+          menuOpen={menuOpen}
+          toggleMenuOpen={toggleMenuOpen}
+          allSurah={allSurah}
+        />
       </motion.div>
 
       {/* details */}
@@ -39,7 +50,7 @@ export default function Surah({ surah }) {
         </div>
         <div className='bg-slate-200 p-2 rounded-md text-slate-700 font-medium flex items-center justify-between text-sm sm:text-base space-x-2 shadow-sm'>
           <p className='bg-slate-100 px-2 py-1 rounded-md'>
-            {originEmoji} {surah.revelation.id}
+            {revelationEmoji} {surah.revelation.id}
           </p>
           <p className='bg-slate-100 px-2 py-1 rounded-md flex-grow text-center'>
             {surah.name.translation.id}
@@ -103,7 +114,11 @@ export async function getStaticProps({ params }) {
     },
   })
 
+  const allSurah = await prisma.surah.findMany({
+    select: { id: true, name: true },
+  })
+
   return {
-    props: { surah },
+    props: { surah, allSurah },
   }
 }

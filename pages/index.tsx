@@ -1,6 +1,6 @@
-import BigLink from 'components/BigLink'
-import Greeting from 'components/Greeting'
-import Layout from 'components/Layout'
+import BigLink from 'components/global/BigLink'
+import Greeting from 'components/global/Greeting'
+import Layout from 'components/global/layout'
 import { motion } from 'framer-motion'
 import { childVariants } from 'lib/animations'
 
