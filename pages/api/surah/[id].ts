@@ -11,7 +11,7 @@ export default async function getSpecificSurah(
       id: Number(req.query.id),
     },
     include: {
-      verses: true,
+      verses: { orderBy: { inSurah: 'asc' } },
     },
   })
   res.status(200).json(surah)

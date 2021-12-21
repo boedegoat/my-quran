@@ -1,5 +1,9 @@
+import { ChevronLeftIcon, MenuAlt3Icon } from '@heroicons/react/outline'
 import { DotsVerticalIcon } from '@heroicons/react/solid'
 import Layout from 'components/Layout'
+import MotionNextLink from 'components/MotionNextLink'
+import { motion } from 'framer-motion'
+import { childVariants, linkVariants } from 'lib/animations'
 import { fetchMyApi } from 'lib/utils'
 
 export default function Surah({ surah }) {
@@ -9,8 +13,26 @@ export default function Surah({ surah }) {
 
   return (
     <Layout title='surah'>
+      <motion.div
+        variants={childVariants}
+        className='flex justify-between items-center mb-10'
+      >
+        <MotionNextLink
+          variants={linkVariants}
+          whileHover='hover'
+          whileTap='tap'
+          href='/read-quran'
+          className='inline-flex items-center font-medium text-slate-500 text-sm'
+        >
+          <ChevronLeftIcon className='w-4 h-4 mr-2' /> Back to Read Quran
+        </MotionNextLink>
+        <button className='p-1 bg-slate-600 text-slate-50 rounded-md hover:bg-slate-800'>
+          <MenuAlt3Icon className='w-5 h-5' />
+        </button>
+      </motion.div>
+
       {/* details */}
-      <header className='space-y-4'>
+      <motion.header variants={childVariants} className='space-y-4'>
         <div className='font-bold text-center'>
           <h1 className='text-slate-900 text-3xl'>{surah.name.long}</h1>
           <h2 className='text-slate-800/50 text-xl mt-2'>
@@ -26,10 +48,16 @@ export default function Surah({ surah }) {
           </p>
           <p className='bg-slate-100 px-2 py-1 rounded-md'>{surah.numberOfVerses} ayat</p>
         </div>
-      </header>
+      </motion.header>
 
       {/* verses */}
-      <section className='space-y-5 mt-5'>
+      <motion.section variants={childVariants} className='space-y-5 mt-5'>
+        {surah.preBismillah && (
+          <div className='text-center bg-white py-3 rounded-md shadow-sm text-xl sm:text-2xl'>
+            {surah.preBismillah.text.arab}
+          </div>
+        )}
+
         {surah.verses.map((verse) => (
           <div key={verse.id} className='bg-white rounded-md shadow-md overflow-hidden'>
             <div className='text-sm text-slate-800 px-5 pt-5 flex justify-between items-center'>
@@ -49,7 +77,7 @@ export default function Surah({ surah }) {
             </div>
           </div>
         ))}
-      </section>
+      </motion.section>
     </Layout>
   )
 }
