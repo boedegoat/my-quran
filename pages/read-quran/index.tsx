@@ -2,11 +2,12 @@ import Layout from 'components/global/layout'
 import TabGroup from 'components/global/Tab'
 import JuzBigLinks from 'components/read-quran/JuzBigLinks'
 import SurahBigLinks from 'components/read-quran/SurahBigLinks'
+import { containerVariants } from 'lib/animations'
 import prisma from 'lib/prisma'
 
 export default function ReadQuran({ allSurah, firstVerses }) {
   return (
-    <Layout title='Read Quran'>
+    <Layout title='Read Quran' variants={containerVariants}>
       <TabGroup>
         <TabGroup.Head>
           <TabGroup.Tab>Surah</TabGroup.Tab>

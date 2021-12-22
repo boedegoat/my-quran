@@ -4,7 +4,7 @@ import MotionContainer from './MotionContainer'
 import Navbar from './Navbar'
 import NextLink from 'components/global/NextLink'
 
-export default function Layout({ title, children }) {
+export default function Layout({ title, children, variants = null }) {
   return (
     <>
       <Head>
@@ -22,7 +22,9 @@ export default function Layout({ title, children }) {
 
       <main className='wrapper flex my-5 pb-20 sm:mt-10 sm:pb-0 sm:space-x-5'>
         <Navbar />
-        <MotionContainer className='flex-grow'>{children}</MotionContainer>
+        <MotionContainer variants={variants} className='flex-grow'>
+          {children}
+        </MotionContainer>
       </main>
     </>
   )

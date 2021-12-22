@@ -2,11 +2,11 @@ import BigLink from 'components/global/BigLink'
 import Greeting from 'components/global/Greeting'
 import Layout from 'components/global/layout'
 import { motion } from 'framer-motion'
-import { childVariants } from 'lib/animations'
+import { childVariants, containerVariants } from 'lib/animations'
 
 export default function Home() {
   return (
-    <Layout title='Home'>
+    <Layout title='Home' variants={containerVariants}>
       <Greeting />
       <motion.section
         variants={childVariants}
