@@ -7,6 +7,7 @@ import { childVariants, linkVariants } from 'lib/animations'
 import prisma from 'lib/prisma'
 import { useRevelation, useToggle } from 'hooks'
 import SurahMenu from 'components/read-quran/SurahMenu'
+import VerseMenu from 'components/read-quran/VerseMenu'
 
 export default function Surah({ surah, allSurah }) {
   const [menuOpen, toggleMenuOpen] = useToggle(false)
@@ -68,13 +69,13 @@ export default function Surah({ surah, allSurah }) {
         )}
 
         {surah.verses.map((verse) => (
-          <div key={verse.id} className='bg-white rounded-md shadow-md overflow-hidden'>
+          <div key={verse.id} className='bg-white rounded-md shadow-md'>
+            {/* top */}
             <div className='text-sm text-slate-800 px-5 pt-5 flex justify-between items-center'>
               <p>{verse.inSurah}</p>
-              <button className='p-1 bg-slate-300/60 rounded-md text-slate-400 hover:bg-slate-300'>
-                <DotsVerticalIcon className='w-4 h-4' />
-              </button>
+              <VerseMenu />
             </div>
+            {/* body */}
             <div className='p-5 text-right'>
               <p className='mb-5 text-xl sm:text-2xl font-medium'>{verse.text.arab}</p>
               <div className='text-sm sm:text-lg text-slate-500 space-y-4'>
