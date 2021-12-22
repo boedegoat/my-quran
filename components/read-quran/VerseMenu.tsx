@@ -4,6 +4,7 @@ import {
   FolderAddIcon,
   PaperClipIcon,
   ShareIcon,
+  SpeakerphoneIcon,
   VolumeUpIcon,
 } from '@heroicons/react/outline'
 import { DotsVerticalIcon } from '@heroicons/react/solid'
@@ -21,6 +22,9 @@ export default function VerseMenu() {
       <Dropdown.Group>
         <Dropdown.Item type='button' Icon={PaperClipIcon}>
           Tandai Terakhir Baca
+        </Dropdown.Item>
+        <Dropdown.Item type='button' Icon={FolderAddIcon}>
+          Simpan ke Bookmark
         </Dropdown.Item>
       </Dropdown.Group>
 
@@ -43,8 +47,8 @@ export default function VerseMenu() {
       </Dropdown.Group>
 
       <Dropdown.Group>
-        <Dropdown.Item type='button' Icon={FolderAddIcon}>
-          Simpan ke Bookmark
+        <Dropdown.Item type='button' Icon={SpeakerphoneIcon} danger>
+          Lapor Kesalahan
         </Dropdown.Item>
       </Dropdown.Group>
     </Dropdown>
