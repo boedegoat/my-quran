@@ -11,7 +11,7 @@ export default function Layout({ title, children, variants = null }) {
         <title>My Quran - {title}</title>
       </Head>
 
-      <header className='py-4 sticky top-0 bg-white border-b shadow-sm z-40'>
+      <header className='py-4 sticky z-[11] top-0 bg-white border-b shadow-sm'>
         <div className='wrapper flex justify-between items-center'>
           <NextLink href='/'>
             <h1 className='text-slate-900 font-bold text-2xl'>My Quran</h1>
@@ -26,6 +26,8 @@ export default function Layout({ title, children, variants = null }) {
           {children}
         </MotionContainer>
       </main>
+
+      {/* mobile dropdown */}
     </>
   )
 }
