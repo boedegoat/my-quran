@@ -1,5 +1,4 @@
 import { ChevronLeftIcon, MenuAlt3Icon } from '@heroicons/react/outline'
-import { DotsVerticalIcon } from '@heroicons/react/solid'
 import Layout from 'components/global/layout'
 import MotionNextLink from 'components/global/MotionNextLink'
 import { motion } from 'framer-motion'

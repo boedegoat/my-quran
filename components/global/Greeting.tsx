@@ -1,10 +1,24 @@
-import { useTimeGreeting } from 'hooks'
 import { useSession } from 'next-auth/react'
+import { useEffect, useState } from 'react'
+import { GreetingType } from 'typings/hooks'
 
 export default function Greeting() {
-  const greeting = useTimeGreeting()
+  const [greeting, setGreeting] = useState<GreetingType>('' as GreetingType)
   const { data: session, status } = useSession()
   const me = session?.user.name || 'Guest'
+
+  const handleGreeting = () => {
+    const today = new Date()
+    const hour = today.getHours()
+    if (hour >= 0 && hour < 6) setGreeting('Good Morning')
+    else if (hour >= 6 && hour < 12) setGreeting('Good Morning')
+    else if (hour >= 12 && hour < 17) setGreeting('Good Afternoon')
+    else setGreeting('Good Evening')
+  }
+
+  useEffect(() => {
+    handleGreeting()
+  }, [])
 
   if (status === 'loading') return <Skeleton />
   return (
