@@ -9,7 +9,7 @@ const Dropdown = ({ children, toggler }) => {
       {({ open }) => (
         <>
           <HeadlessMenu.Button>{toggler}</HeadlessMenu.Button>
-          <Transition as='div' show={open}>
+          <Transition as='div' className='relative z-50' show={open}>
             {/* desktop version */}
             <Transition.Child
               as={Fragment}
@@ -20,7 +20,7 @@ const Dropdown = ({ children, toggler }) => {
               leaveFrom='transform opacity-100 scale-100'
               leaveTo='transform opacity-0 scale-95'
             >
-              <HeadlessMenu.Items className='hidden sm:block absolute right-0 min-w-[150px] mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+              <HeadlessMenu.Items className='hidden sm:block absolute right-0 min-w-[150px] max-w-auto mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 {children}
               </HeadlessMenu.Items>
             </Transition.Child>
@@ -36,7 +36,7 @@ const Dropdown = ({ children, toggler }) => {
               leaveTo='opacity-0'
             >
               {/* overlay */}
-              <div className='sm:hidden fixed z-50 inset-0 bg-black/50' />
+              <div className='sm:hidden fixed inset-0 bg-black/50' />
             </Transition.Child>
             <Transition.Child
               as={Fragment}
@@ -47,7 +47,7 @@ const Dropdown = ({ children, toggler }) => {
               leaveFrom='transform opacity-100 translate-y-0'
               leaveTo='transform opacity-0 translate-y-10'
             >
-              <HeadlessMenu.Items className='sm:hidden fixed z-50 bottom-0 left-0 w-full origin-bottom bg-white divide-y divide-gray-100 rounded-t-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+              <HeadlessMenu.Items className='sm:hidden fixed bottom-0 left-0 w-full origin-bottom bg-white divide-y divide-gray-100 rounded-t-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 {children}
               </HeadlessMenu.Items>
             </Transition.Child>
@@ -60,7 +60,7 @@ const Dropdown = ({ children, toggler }) => {
 
 const Item = ({ children, Icon, disabled, type, href, onClick, danger }: IItem) => {
   const groupStyle = (active: boolean) =>
-    `group flex rounded-md items-center w-full px-2 py-2 text-sm ${
+    `group flex rounded-md items-center w-full px-2 py-2 text-sm whitespace-nowrap ${
       active ? `${danger ? 'bg-red-700' : 'bg-slate-800'} text-white` : ''
     }`
 
