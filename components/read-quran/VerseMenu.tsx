@@ -10,7 +10,7 @@ import {
 import { DotsVerticalIcon } from '@heroicons/react/solid'
 import Dropdown from 'components/global/Dropdown'
 
-export default function VerseMenu() {
+export default function VerseMenu({ surahName, verseInSurah }) {
   return (
     <Dropdown
       toggler={
@@ -19,6 +19,11 @@ export default function VerseMenu() {
         </span>
       }
     >
+      <Dropdown.Group>
+        <p className='text-center font-medium text-[17px] py-1'>
+          {surahName} ayat {verseInSurah}
+        </p>
+      </Dropdown.Group>
       <Dropdown.Group>
         <Dropdown.Item type='button' Icon={PaperClipIcon}>
           Tandai Terakhir Baca

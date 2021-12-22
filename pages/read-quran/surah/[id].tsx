@@ -73,7 +73,10 @@ export default function Surah({ surah, allSurah }) {
             {/* top */}
             <div className='text-sm text-slate-800 px-5 pt-5 flex justify-between items-center'>
               <p>{verse.inSurah}</p>
-              <VerseMenu />
+              <VerseMenu
+                surahName={surah.name.transliteration.id}
+                verseInSurah={verse.inSurah}
+              />
             </div>
             {/* body */}
             <div className='p-5 text-right'>
