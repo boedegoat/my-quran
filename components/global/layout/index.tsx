@@ -3,6 +3,7 @@ import AuthButton from './AuthButton'
 import MotionContainer from './MotionContainer'
 import Navbar from './Navbar'
 import NextLink from 'components/global/NextLink'
+import { Toaster } from 'react-hot-toast'
 
 export default function Layout({ title, children, variants = null }) {
   return (
@@ -10,6 +11,8 @@ export default function Layout({ title, children, variants = null }) {
       <Head>
         <title>My Quran - {title}</title>
       </Head>
+
+      <Toaster />
 
       <header className='py-4 sticky z-[11] top-0 bg-white border-b shadow-sm'>
         <div className='wrapper flex justify-between items-center'>

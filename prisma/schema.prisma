@@ -24,14 +24,15 @@ model Surah {
 model Verse {
   id              Int     @id
   inSurah         Int
-  surahId         Int     @map("surah_id")
   firstVerseInJuz Boolean @map("first_verse_in_juz")
   meta            Json
   text            Json
   translation     Json
   audio           Json
   tafsir          Json
+  surahId         Int     @map("surah_id")
   surah           Surah   @relation(fields: [surahId], references: [id])
+  lastVerses      User[]
 
   @@map("verses")
 }
@@ -44,6 +45,8 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  lastVerseId   Int?      @map("last_verse_id")
+  lastVerse     Verse?    @relation(fields: [lastVerseId], references: [id])
 
   @@map("users")
 }

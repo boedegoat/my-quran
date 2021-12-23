@@ -4,13 +4,18 @@ import MotionNextLink from 'components/global/MotionNextLink'
 import { motion } from 'framer-motion'
 import { childVariants, linkVariants } from 'lib/animations'
 import prisma from 'lib/prisma'
-import { useRevelation, useToggle } from 'hooks'
+import { useRevelation, useSessionListener, useToggle } from 'hooks'
 import SurahMenu from 'components/read-quran/SurahMenu'
 import VerseMenu from 'components/read-quran/VerseMenu'
+import { useSession } from 'next-auth/react'
+import { syncLastRead } from 'lib/quran'
 
 export default function Surah({ surah, allSurah }) {
   const [menuOpen, toggleMenuOpen] = useToggle(false)
   const revelationEmoji = useRevelation(surah.revelation.arab)
+
+  const { status } = useSession()
+  useSessionListener(status, 'authenticated', syncLastRead)
 
   return (
     <Layout title='surah'>
@@ -75,6 +80,7 @@ export default function Surah({ surah, allSurah }) {
               <VerseMenu
                 surahName={surah.name.transliteration.id}
                 verseInSurah={verse.inSurah}
+                verseId={verse.id}
               />
             </div>
             {/* body */}
