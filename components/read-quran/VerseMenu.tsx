@@ -10,7 +10,7 @@ import {
 import { DotsVerticalIcon } from '@heroicons/react/solid'
 import Dropdown from 'components/global/Dropdown'
 import { MarkLastRead } from 'components/Toasts'
-import { updateLastRead } from 'lib/quran'
+import { setLastReadInLocal, updateLastRead } from 'lib/quran'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 
@@ -35,17 +35,15 @@ export default function VerseMenu({ surahName, verseInSurah, verseId }) {
           type='button'
           Icon={PaperClipIcon}
           onClick={async () => {
-            const lastReadKey = 'lastReadId' // key name in local storage
-
             // if user has not signed in
             if (status === 'unauthenticated') {
-              localStorage.setItem(lastReadKey, verseId)
+              setLastReadInLocal({ surahName, verseId, verseInSurah })
               toast.success(<MarkLastRead {...{ surahName, verseInSurah }} />)
               return
             }
 
-            // if user has signed in
-            localStorage.setItem(lastReadKey, verseId)
+            // if user has signed in, update both on local and cloud
+            setLastReadInLocal({ surahName, verseId, verseInSurah })
             await toast.promise(updateLastRead(verseId), {
               loading: 'Tunggu bos...',
               success: <MarkLastRead {...{ surahName, verseInSurah }} />,

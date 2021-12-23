@@ -2,9 +2,12 @@ import BigLink from 'components/global/BigLink'
 import Greeting from 'components/global/Greeting'
 import Layout from 'components/global/layout'
 import { motion } from 'framer-motion'
+import { useLastRead } from 'hooks'
 import { childVariants, containerVariants } from 'lib/animations'
 
 export default function Home() {
+  const lastRead = useLastRead()
+
   return (
     <Layout title='Home' variants={containerVariants}>
       <Greeting />
@@ -20,23 +23,25 @@ export default function Home() {
         </h1>
       </motion.section>
       <div className='grid mt-5 sm:grid-cols-2 sm:grid-rows-2 gap-5'>
-        <BigLink
-          className='row-span-full'
-          href='/read-quran'
-          emoji='▶'
-          label='Continue Read'
-          description='QS: Al-Baqarah 30'
-        />
+        {lastRead && (
+          <BigLink
+            className='row-span-full'
+            href='/read-quran'
+            emoji='▶'
+            label='Lanjutkan Membaca'
+            description={`${lastRead.surahName} ayat ${lastRead.verseInSurah}`}
+          />
+        )}
         <BigLink
           href='/read-quran'
           emoji='📖'
-          label='Read Quran'
+          label='Baca Quran'
           description='Explore 30 juz of al quran'
         />
         <BigLink
           href='/bookmark/favorites'
           emoji='❤'
-          label='Your Favorites'
+          label='Favorit Anda'
           description='See your favorite surah and ayat'
         />
       </div>

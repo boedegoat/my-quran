@@ -1,10 +1,10 @@
 import { getSession } from 'next-auth/react'
 import prisma from 'lib/prisma'
 
-export default async function markLastReadRoute(req, res) {
+export default async function updateLastReadById(req, res) {
   const session = await getSession({ req })
   if (!session) {
-    res.status(401).json('Unauthorize')
+    res.status(401).json({ message: 'Unauthorize' })
   }
 
   const lastVerseId = req.query.id

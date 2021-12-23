@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useSkipEffect } from './useSkipEffect'
 
 type StatusType = 'authenticated' | 'loading' | 'unauthenticated'
 
@@ -7,7 +7,7 @@ export function useSessionListener(
   on: StatusType,
   callback: () => void
 ) {
-  useEffect(() => {
+  useSkipEffect(() => {
     if (sessionStatus === on) callback()
   }, [sessionStatus])
 }

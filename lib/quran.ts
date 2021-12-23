@@ -1,15 +1,46 @@
 import { resolver } from 'lib/utils'
+import { ILastRead } from 'typings/quran'
 
 export async function updateLastRead(verseId) {
-  const res = await fetch('/api/mark-last-read/' + verseId)
+  const res = await fetch('/api/last-read/' + verseId)
   return resolver(res)
 }
 
+export function setLastReadInLocal({ verseId, surahName, verseInSurah }) {
+  localStorage.setItem(
+    'lastRead',
+    JSON.stringify({
+      id: verseId,
+      surahName,
+      verseInSurah,
+    } as ILastRead)
+  )
+}
+
+export function getLastReadInLocal() {
+  const lastRead = JSON.parse(localStorage.getItem('lastRead')) as ILastRead
+  if (lastRead) updateLastRead(lastRead.id)
+  return lastRead
+}
+
+export async function getLastRead() {
+  const res = await fetch('/api/last-read')
+  const { lastRead }: { lastRead: ILastRead } = await res.json()
+  if (!lastRead) return null
+  setLastReadInLocal({ verseId: lastRead.id, ...lastRead })
+  return lastRead as ILastRead
+}
+
 export async function syncLastRead() {
-  console.log('updating user last read from local storage to cloud...')
-  const lastReadId = localStorage.getItem('lastReadId')
-  if (lastReadId) {
-    await updateLastRead(lastReadId)
-    console.log('updated user last read')
+  const lastReadInLocal = getLastReadInLocal()
+  if (lastReadInLocal) {
+    console.log('updating user last read (local storage -> cloud)...')
+    await updateLastRead(lastReadInLocal.id)
   }
+  if (!lastReadInLocal) {
+    console.log('updating user last read (cloud -> local storage)...')
+    const lastRead = await getLastRead()
+    setLastReadInLocal({ verseId: lastRead.id, ...lastRead })
+  }
+  console.log('updated user last read')
 }
