@@ -22,6 +22,12 @@ export default apiHandler.get(async (req, res) => {
     },
   })
 
+  // check if user doesn't have last read yet
+  if (!lastRead) {
+    res.status(404).json({ message: `User with email ${user.email} doesn't have any lastRead yet` })
+    return
+  }
+
   res.status(200).json({
     message: `Success get last read of user with email ${user.email}`,
     lastRead: {
