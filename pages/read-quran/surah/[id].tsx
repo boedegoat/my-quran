@@ -18,11 +18,8 @@ export default function Surah({ surah, allSurah }) {
   useSessionListener(status, 'authenticated', syncLastRead)
 
   return (
-    <Layout title='surah'>
-      <motion.div
-        variants={childVariants}
-        className='flex justify-between items-center mb-10'
-      >
+    <Layout title={surah.name.transliteration.id}>
+      <motion.div variants={childVariants} className='flex justify-between items-center mb-10'>
         <MotionNextLink
           variants={linkVariants}
           whileHover='hover'
@@ -38,11 +35,7 @@ export default function Surah({ surah, allSurah }) {
         >
           <MenuAlt3Icon className='w-5 h-5' />
         </button>
-        <SurahMenu
-          menuOpen={menuOpen}
-          toggleMenuOpen={toggleMenuOpen}
-          allSurah={allSurah}
-        />
+        <SurahMenu menuOpen={menuOpen} toggleMenuOpen={toggleMenuOpen} allSurah={allSurah} />
       </motion.div>
 
       {/* details */}
@@ -72,7 +65,7 @@ export default function Surah({ surah, allSurah }) {
           </div>
         )}
 
-        {surah.verses.map((verse) => (
+        {surah.verses.map(verse => (
           <div key={verse.id} className='bg-white rounded-md shadow-md'>
             {/* top */}
             <div className='text-sm text-slate-800 px-5 pt-5 flex justify-between items-center'>
@@ -87,9 +80,7 @@ export default function Surah({ surah, allSurah }) {
             <div className='p-5 text-right'>
               <p className='mb-5 text-xl sm:text-2xl font-medium'>{verse.text.arab}</p>
               <div className='text-sm sm:text-lg text-slate-500 space-y-4'>
-                <p className='text-slate-700 font-medium'>
-                  {verse.text.transliteration.en}
-                </p>
+                <p className='text-slate-700 font-medium'>{verse.text.transliteration.en}</p>
                 <p>{verse.translation.id}</p>
               </div>
             </div>
