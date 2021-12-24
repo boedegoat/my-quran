@@ -17,7 +17,11 @@ export default apiHandler.get(async (req, res) => {
     },
     select: {
       lastVerse: {
-        select: { inSurah: true, id: true, surah: { select: { name: true } } },
+        select: {
+          inSurah: true,
+          id: true,
+          surah: { select: { name: true, id: true } },
+        },
       },
     },
   })
@@ -31,7 +35,8 @@ export default apiHandler.get(async (req, res) => {
   res.status(200).json({
     message: `Success get last read of user with email ${user.email}`,
     lastRead: {
-      id: lastRead.id,
+      verseId: lastRead.id,
+      surahId: lastRead.surah.id,
       // @ts-ignore
       surahName: lastRead.surah.name.transliteration.id,
       verseInSurah: lastRead.inSurah,

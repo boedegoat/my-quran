@@ -23,7 +23,7 @@ export default function Home() {
         {lastRead && (
           <BigLink
             className='row-span-full'
-            href='/read-quran'
+            href={`/read-quran/surah/${lastRead.surahId}#${lastRead.verseInSurah}`}
             emoji='▶'
             label='Lanjutkan Membaca'
             description={`${lastRead.surahName} ayat ${lastRead.verseInSurah}`}

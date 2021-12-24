@@ -12,13 +12,18 @@ export default function Verses({ surah }) {
       )}
 
       {surah.verses.map(verse => (
-        <div key={verse.id} className='bg-white rounded-md shadow-md'>
+        <div
+          key={verse.id}
+          id={verse.inSurah}
+          className='bg-white rounded-md shadow-md scroll-mt-24'
+        >
           {/* top */}
           <div className='text-sm text-slate-800 px-5 pt-5 flex justify-between items-center'>
             <p>{verse.inSurah}</p>
             <VerseMenu
               surahName={surah.name.transliteration.id}
               verseInSurah={verse.inSurah}
+              surahId={surah.id}
               verseId={verse.id}
             />
           </div>

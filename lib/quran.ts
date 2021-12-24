@@ -8,11 +8,12 @@ export async function updateLastRead(verseId) {
   return resolver(res)
 }
 
-export function setLastReadInLocal({ verseId, surahName, verseInSurah }) {
+export function setLastReadInLocal({ verseId, surahId, surahName, verseInSurah }) {
   localStorage.setItem(
     'lastRead',
     JSON.stringify({
-      id: verseId,
+      verseId,
+      surahId,
       surahName,
       verseInSurah,
     } as ILastRead)
@@ -21,7 +22,7 @@ export function setLastReadInLocal({ verseId, surahName, verseInSurah }) {
 
 export function getLastReadInLocal() {
   const lastRead = JSON.parse(localStorage.getItem('lastRead')) as ILastRead
-  if (lastRead) updateLastRead(lastRead.id)
+  if (lastRead) updateLastRead(lastRead.verseId)
   return lastRead
 }
 
@@ -29,7 +30,7 @@ export async function getLastRead() {
   const res = await fetch('/api/last-read')
   const { lastRead }: { lastRead: ILastRead } = await res.json()
   if (!lastRead) return null
-  setLastReadInLocal({ verseId: lastRead.id, ...lastRead })
+  setLastReadInLocal(lastRead)
   return lastRead as ILastRead
 }
 
@@ -37,12 +38,15 @@ export async function syncLastRead() {
   const lastReadInLocal = getLastReadInLocal()
   if (lastReadInLocal) {
     console.log('updating user last read (local storage -> cloud)...')
-    await updateLastRead(lastReadInLocal.id)
+    await updateLastRead(lastReadInLocal.verseId)
+    console.log('updated user last read')
   }
   if (!lastReadInLocal) {
-    console.log('updating user last read (cloud -> local storage)...')
     const lastRead = await getLastRead()
-    setLastReadInLocal({ verseId: lastRead.id, ...lastRead })
+    if (lastRead) {
+      console.log('updating user last read (cloud -> local storage)...')
+      setLastReadInLocal(lastRead)
+      console.log('updated user last read')
+    }
   }
-  console.log('updated user last read')
 }
