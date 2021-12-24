@@ -1,5 +1,5 @@
 import { getSession } from 'next-auth/react'
-import { Middleware } from 'typings/api'
+import { Middleware } from 'lib/typings/api'
 
 export default function authMiddleware(): Middleware {
   return async (req, res, next) => {

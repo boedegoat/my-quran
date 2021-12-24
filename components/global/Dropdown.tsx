@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react'
 import { Menu as HeadlessMenu, Transition } from '@headlessui/react'
 import NextLink from './NextLink'
-import { IItem } from 'typings/component'
+import { IItem } from 'lib/typings/component'
 
 const Dropdown = ({ children, toggler }) => {
   return (
@@ -64,8 +64,7 @@ const Item = ({ children, Icon, disabled, type, href, onClick, danger }: IItem) 
       active ? `${danger ? 'bg-red-700' : 'bg-slate-800'} text-white` : ''
     }`
 
-  const iconStyle = (active: boolean) =>
-    `mr-3 h-5 w-5 ${active ? 'text-white' : 'text-gray-400'}`
+  const iconStyle = (active: boolean) => `mr-3 h-5 w-5 ${active ? 'text-white' : 'text-gray-400'}`
 
   return (
     <HeadlessMenu.Item disabled={disabled}>

@@ -1,17 +1,20 @@
-import { getSession } from 'next-auth/react'
+import apiHandler from 'lib/api-handler'
 import prisma from 'lib/prisma'
 
-export default async function updateLastReadById(req, res) {
-  const session = await getSession({ req })
-  if (!session) {
+export default apiHandler.patch(async (req, res) => {
+  const { user } = req
+
+  // check if user not logged in
+  if (!user) {
     res.status(401).json({ message: 'Unauthorize' })
+    return
   }
 
   const lastVerseId = req.query.id
 
   const updatedUser = await prisma.user.update({
     where: {
-      email: session.user.email,
+      email: user.email,
     },
     data: {
       lastVerseId: Number(lastVerseId),
@@ -22,4 +25,4 @@ export default async function updateLastReadById(req, res) {
     message: `Success updated verseId: ${lastVerseId} to ${updatedUser.email}`,
     updatedUser,
   })
-}
+})

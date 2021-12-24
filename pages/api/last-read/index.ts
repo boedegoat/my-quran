@@ -1,16 +1,19 @@
+import apiHandler from 'lib/api-handler'
 import prisma from 'lib/prisma'
-import { getSession } from 'next-auth/react'
-import { ILastRead } from 'typings/quran'
+import { ILastRead } from 'lib/typings/quran'
 
-export default async function getLastRead(req, res) {
-  const session = await getSession({ req })
-  if (!session) {
+export default apiHandler.get(async (req, res) => {
+  const { user } = req
+
+  // check if user not logged in
+  if (!user) {
     res.status(401).json({ message: 'Unauthorize' })
+    return
   }
 
   const { lastVerse: lastRead } = await prisma.user.findUnique({
     where: {
-      email: session.user.email,
+      email: user.email,
     },
     select: {
       lastVerse: {
@@ -20,7 +23,7 @@ export default async function getLastRead(req, res) {
   })
 
   res.status(200).json({
-    message: `Success get last read of user with email ${session.user.email}`,
+    message: `Success get last read of user with email ${user.email}`,
     lastRead: {
       id: lastRead.id,
       // @ts-ignore
@@ -28,4 +31,4 @@ export default async function getLastRead(req, res) {
       verseInSurah: lastRead.inSurah,
     } as ILastRead,
   })
-}
+})

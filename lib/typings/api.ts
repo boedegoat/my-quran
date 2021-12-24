@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next'
-import { Middleware as NextConnectMiddleware } from 'next-connect'
+import { Middleware as NextConnectMiddleware, Options } from 'next-connect'
 
 export interface NextApiRequestExtended extends NextApiRequest {
   user: {
@@ -9,4 +9,10 @@ export interface NextApiRequestExtended extends NextApiRequest {
   } | null
 }
 
+export type ApiController<T = any> = (
+  req: NextApiRequestExtended,
+  res: NextApiResponse<T>
+) => void | Promise<void>
+
 export type Middleware = NextConnectMiddleware<NextApiRequestExtended, NextApiResponse>
+export type ErrorHandlers = Options<NextApiRequestExtended, NextApiResponse>

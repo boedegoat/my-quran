@@ -1,6 +1,6 @@
 import { useSession } from 'next-auth/react'
 import { useEffect, useState } from 'react'
-import { GreetingType } from 'typings/hooks'
+import { GreetingType } from 'lib/typings/hooks'
 
 export default function Greeting() {
   const [greeting, setGreeting] = useState<GreetingType>('' as GreetingType)

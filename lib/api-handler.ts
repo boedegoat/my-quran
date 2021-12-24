@@ -1,9 +1,8 @@
-import { NextApiResponse } from 'next'
-import nextConnect, { Options } from 'next-connect'
-import { NextApiRequestExtended } from 'typings/api'
-import authMiddleware from 'middlewares/auth'
+import nextConnect from 'next-connect'
+import { ErrorHandlers } from 'lib/typings/api'
+import authMiddleware from 'lib/middlewares/auth'
 
-const errorHandlers: Options<NextApiRequestExtended, NextApiResponse> = {
+const errorHandlers: ErrorHandlers = {
   // handle server errors
   onError(error, req, res) {
     res.status(501).json({ error: error.message })

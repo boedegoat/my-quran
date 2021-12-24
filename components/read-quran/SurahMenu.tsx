@@ -2,7 +2,7 @@ import Modal from 'components/global/Modal'
 import NextLink from 'components/global/NextLink'
 import SearchBar from 'components/global/SearchBar'
 import TabGroup from 'components/global/Tab'
-import { useSearchSurah } from 'hooks'
+import { useSearchSurah } from 'lib/hooks'
 import { classNames } from 'lib/utils'
 import { useRouter } from 'next/router'
 
@@ -26,11 +26,11 @@ export default function SurahMenu({ menuOpen, toggleMenuOpen, allSurah }) {
             <SearchBar
               placeholder='Cari Nama atau No. Surat'
               value={searchSurah}
-              onChange={(e) => setSearchSurah(e.target.value)}
+              onChange={e => setSearchSurah(e.target.value)}
             />
             {/* surah list */}
             <div className='mt-5 p-2 border space-y-3 rounded-lg max-h-80 overflow-y-auto'>
-              {(searchSurahResults || allSurah).map((surah) => (
+              {(searchSurahResults || allSurah).map(surah => (
                 <NextLink
                   href={'/read-quran/surah/' + surah.id}
                   key={surah.id}

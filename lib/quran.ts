@@ -1,8 +1,10 @@
 import { resolver } from 'lib/utils'
-import { ILastRead } from 'typings/quran'
+import { ILastRead } from 'lib/typings/quran'
 
 export async function updateLastRead(verseId) {
-  const res = await fetch('/api/last-read/' + verseId)
+  const res = await fetch('/api/last-read/' + verseId, {
+    method: 'PATCH',
+  })
   return resolver(res)
 }
 
