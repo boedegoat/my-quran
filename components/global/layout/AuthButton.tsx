@@ -10,6 +10,7 @@ import Image from 'next/image'
 import Dropdown from 'components/global/Dropdown'
 import { motion } from 'framer-motion'
 import { buttonVariants } from 'lib/animations'
+import { resetLastRead } from 'lib/quran'
 
 export default function AuthButton() {
   const { data: session, status } = useSession()
@@ -19,14 +20,7 @@ export default function AuthButton() {
   if (session) {
     return (
       <Dropdown
-        toggler={
-          <Image
-            src={session.user.image}
-            width={30}
-            height={30}
-            className='rounded-full'
-          />
-        }
+        toggler={<Image src={session.user.image} width={30} height={30} className='rounded-full' />}
       >
         <Dropdown.Group>
           <Dropdown.Item type='button' Icon={MoonIcon}>
@@ -43,12 +37,7 @@ export default function AuthButton() {
           </Dropdown.Item>
         </Dropdown.Group>
         <Dropdown.Group>
-          <Dropdown.Item
-            type='button'
-            onClick={() => signOut()}
-            danger
-            Icon={ExternalLinkIcon}
-          >
+          <Dropdown.Item type='button' onClick={() => signOut()} danger Icon={ExternalLinkIcon}>
             Sign Out
           </Dropdown.Item>
         </Dropdown.Group>
@@ -61,7 +50,10 @@ export default function AuthButton() {
       variants={buttonVariants}
       whileHover='hover'
       whileTap='tap'
-      onClick={() => signIn()}
+      onClick={() => {
+        resetLastRead()
+        signIn()
+      }}
     >
       Sign In
     </motion.button>

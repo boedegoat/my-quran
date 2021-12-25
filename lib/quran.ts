@@ -1,6 +1,8 @@
 import { resolver } from 'lib/utils'
 import { ILastRead } from 'lib/typings/quran'
 
+const lastReadKey = 'lastRead'
+
 export async function updateLastRead(verseId) {
   const res = await fetch('/api/last-read/' + verseId, {
     method: 'PATCH',
@@ -8,9 +10,10 @@ export async function updateLastRead(verseId) {
   return resolver(res)
 }
 
-export function setLastReadInLocal({ verseId, surahId, surahName, verseInSurah }) {
+export function setLastReadInLocal(options: ILastRead) {
+  const { verseId, surahId, surahName, verseInSurah } = options
   localStorage.setItem(
-    'lastRead',
+    lastReadKey,
     JSON.stringify({
       verseId,
       surahId,
@@ -21,7 +24,7 @@ export function setLastReadInLocal({ verseId, surahId, surahName, verseInSurah }
 }
 
 export function getLastReadInLocal() {
-  const lastRead = JSON.parse(localStorage.getItem('lastRead')) as ILastRead
+  const lastRead = JSON.parse(localStorage.getItem(lastReadKey)) as ILastRead
   if (lastRead) updateLastRead(lastRead.verseId)
   return lastRead
 }
@@ -34,9 +37,17 @@ export async function getLastRead() {
   return lastRead as ILastRead
 }
 
+export function resetLastRead() {
+  localStorage.removeItem(lastReadKey)
+}
+
 export async function syncLastRead() {
   const lastRead = await getLastRead()
   const lastReadInLocal = getLastReadInLocal()
+
+  if (lastRead.verseId === lastReadInLocal.verseId) {
+    return lastRead
+  }
 
   if (lastRead) {
     console.log('updating user last read (cloud -> local storage)...')
