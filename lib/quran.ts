@@ -35,18 +35,19 @@ export async function getLastRead() {
 }
 
 export async function syncLastRead() {
+  const lastRead = await getLastRead()
   const lastReadInLocal = getLastReadInLocal()
-  if (lastReadInLocal) {
+
+  if (lastRead) {
+    console.log('updating user last read (cloud -> local storage)...')
+    setLastReadInLocal(lastRead)
+    console.log('updated user last read')
+    return lastRead
+  } else {
+    if (!lastReadInLocal) return null
     console.log('updating user last read (local storage -> cloud)...')
     await updateLastRead(lastReadInLocal.verseId)
     console.log('updated user last read')
-  }
-  if (!lastReadInLocal) {
-    const lastRead = await getLastRead()
-    if (lastRead) {
-      console.log('updating user last read (cloud -> local storage)...')
-      setLastReadInLocal(lastRead)
-      console.log('updated user last read')
-    }
+    return lastReadInLocal
   }
 }
