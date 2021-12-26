@@ -3,7 +3,7 @@ import prisma from 'lib/prisma'
 import { useSessionListener } from 'lib/hooks'
 import { useSession } from 'next-auth/react'
 import { syncLastRead } from 'lib/quran'
-import Verses from 'components/read-quran/Verses'
+import SurahVerses from 'components/read-quran/SurahVerses'
 import SurahDetails from 'components/read-quran/SurahDetails'
 import TopMenu from 'components/read-quran/TopMenu'
 
@@ -15,7 +15,7 @@ export default function Surah({ surah, allSurah }) {
     <Layout title={surah.name.transliteration.id}>
       <TopMenu allSurah={allSurah} />
       <SurahDetails surah={surah} />
-      <Verses surah={surah} />
+      <SurahVerses surah={surah} />
     </Layout>
   )
 }
