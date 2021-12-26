@@ -1,15 +1,19 @@
 import { ChevronLeftIcon, MenuAlt3Icon } from '@heroicons/react/outline'
 import MotionNextLink from 'components/global/MotionNextLink'
-import { motion } from 'framer-motion'
+import { AnimatePresence, motion } from 'framer-motion'
 import { childVariants, linkVariants } from 'lib/animations'
-import { useToggle } from 'lib/hooks'
+import { useScrollDirection, useToggle } from 'lib/hooks'
 import SurahMenu from './SurahMenu'
 
 export default function TopMenu({ allSurah }) {
   const [menuOpen, toggleMenuOpen] = useToggle(false)
+  const scrollDir = useScrollDirection()
 
   return (
-    <motion.div variants={childVariants} className='flex justify-between items-center mb-10'>
+    <motion.div
+      variants={childVariants}
+      className='flex justify-between items-center mb-10'
+    >
       <MotionNextLink
         variants={linkVariants}
         whileHover='hover'
@@ -25,7 +29,24 @@ export default function TopMenu({ allSurah }) {
       >
         <MenuAlt3Icon className='w-5 h-5' />
       </button>
-      <SurahMenu menuOpen={menuOpen} toggleMenuOpen={toggleMenuOpen} allSurah={allSurah} />
+      <AnimatePresence>
+        {scrollDir === 'up' && (
+          <motion.button
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            onClick={() => toggleMenuOpen(true)}
+            className='p-1 bg-slate-800/50 backdrop-blur-sm text-slate-50 rounded-md hover:bg-slate-800 fixed z-10 bottom-28 right-8 shadow-2xl shadow-slate-900'
+          >
+            <MenuAlt3Icon className='w-10 h-10' />
+          </motion.button>
+        )}
+      </AnimatePresence>
+      <SurahMenu
+        menuOpen={menuOpen}
+        toggleMenuOpen={toggleMenuOpen}
+        allSurah={allSurah}
+      />
     </motion.div>
   )
 }
