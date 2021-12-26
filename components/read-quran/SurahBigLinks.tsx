@@ -1,12 +1,11 @@
 import BigLink from 'components/global/BigLink'
 import { motion } from 'framer-motion'
 import { useRevelation } from 'lib/hooks'
-import { containerVariants } from 'lib/animations'
 
 export default function SurahBigLinks({ allSurah }) {
   return (
-    <motion.div variants={containerVariants} className='read-quran-contents'>
-      {allSurah.map(surah => (
+    <motion.div className='read-quran-contents'>
+      {allSurah.map((surah) => (
         <BigLink
           key={surah.id}
           href={'/read-quran/surah/' + surah.id}
@@ -36,7 +35,8 @@ function SurahNumber({ number }) {
 function SurahName({ name }) {
   return (
     <span className='flex'>
-      {name.transliteration.id} <span className='opacity-50 ml-auto'>{name.short}</span>
+      {name.transliteration.id}{' '}
+      <span className='opacity-50 ml-auto'>{name.short}</span>
     </span>
   )
 }

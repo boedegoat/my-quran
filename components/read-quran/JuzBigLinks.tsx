@@ -1,10 +1,9 @@
 import BigLink from 'components/global/BigLink'
 import { motion } from 'framer-motion'
-import { containerVariants } from 'lib/animations'
 
 export default function JuzBigLinks({ firstVerses }) {
   return (
-    <motion.div variants={containerVariants} className='read-quran-contents'>
+    <motion.div className='read-quran-contents'>
       {firstVerses.map((verse) => (
         <BigLink
           key={verse.meta.juz}
