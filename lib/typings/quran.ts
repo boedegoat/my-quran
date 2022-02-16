@@ -3,4 +3,5 @@ export interface ILastRead {
   surahId: number
   surahName: string
   verseInSurah: number
+  verseInJuz: number
 }

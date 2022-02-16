@@ -14,20 +14,20 @@ import { setLastReadInLocal, updateLastRead } from 'lib/quran'
 import { useSession } from 'next-auth/react'
 import toast from 'react-hot-toast'
 
-export default function VerseMenu({ surahName, verseInSurah, surahId, verseId }) {
+export default function VerseMenu({ surahName, verseInSurah, surahId, verseId, verseInJuz }) {
   const { status } = useSession()
 
   const markLastRead = async () => {
     console.log('mark last read')
     // if user has not signed in
     if (status === 'unauthenticated') {
-      setLastReadInLocal({ surahName, verseId, surahId, verseInSurah })
+      setLastReadInLocal({ surahName, verseId, surahId, verseInSurah, verseInJuz })
       toast.success(<MarkLastRead {...{ surahName, verseInSurah }} />)
       return
     }
 
     // if user has signed in, update both on local and cloud
-    setLastReadInLocal({ surahName, verseId, surahId, verseInSurah })
+    setLastReadInLocal({ surahName, verseId, surahId, verseInSurah, verseInJuz })
     await toast.promise(updateLastRead(verseId), {
       loading: 'Tunggu bos...',
       success: <MarkLastRead {...{ surahName, verseInSurah }} />,

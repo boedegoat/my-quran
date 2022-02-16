@@ -2,34 +2,21 @@ import { linkVariants } from 'lib/animations'
 import MotionNextLink from './MotionNextLink'
 import { classNames } from 'lib/utils'
 
-export default function BigLink({
-  href,
-  emoji = null,
-  label,
-  description,
-  ...rest
-}) {
+export default function BigLink({ href, emoji = null, label, description, ...rest }) {
   return (
     <MotionNextLink
       variants={linkVariants}
       whileHover='hover'
       whileTap='tap'
       href={href}
-      className='block h-full shadow-md p-5 rounded-lg bg-white'
+      className='biglink'
       {...rest}
     >
-      <h1 className='text-lg sm:text-2xl mb-2 flex items-center'>
+      <h1 className='biglink-label'>
         {emoji}{' '}
-        <div
-          className={classNames(
-            'text-slate-900 font-bold w-full',
-            emoji ? 'ml-2' : ''
-          )}
-        >
-          {label}
-        </div>
+        <span className={classNames('biglink-labelSpan', emoji ? 'ml-2' : '')}>{label}</span>
       </h1>
-      <p className='text-sm text-slate-500'>{description}</p>
+      <p className='biglink-description'>{description}</p>
     </MotionNextLink>
   )
 }

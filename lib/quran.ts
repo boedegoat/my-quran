@@ -11,16 +11,7 @@ export async function updateLastRead(verseId) {
 }
 
 export function setLastReadInLocal(options: ILastRead) {
-  const { verseId, surahId, surahName, verseInSurah } = options
-  localStorage.setItem(
-    lastReadKey,
-    JSON.stringify({
-      verseId,
-      surahId,
-      surahName,
-      verseInSurah,
-    } as ILastRead)
-  )
+  localStorage.setItem(lastReadKey, JSON.stringify(options))
 }
 
 export function getLastReadInLocal() {

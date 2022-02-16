@@ -1,9 +1,10 @@
 import Layout from 'components/global/layout'
 import prisma from 'lib/prisma'
 import JuzVerses from 'components/read-quran/JuzVerses'
+import { useScrollIntoVerse } from 'lib/hooks'
 
 export default function Juz({ juz, juzNumber }) {
-  console.log(juz)
+  useScrollIntoVerse()
 
   return (
     <Layout title={`Juz ${juzNumber} (${juz.length} ayat)`}>

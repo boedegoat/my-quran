@@ -1,14 +1,21 @@
 import VerseMenu from './VerseMenu'
 
 export default function Verse({ verse, surah }) {
+  const surahName = surah.name.transliteration.id.replace(/\s/g, '-')
+
   return (
-    <div key={verse.id} id={verse.inSurah} className='bg-white rounded-md shadow-md scroll-mt-24'>
+    <div
+      key={verse.id}
+      id={surahName + '-' + verse.inSurah}
+      className='bg-white rounded-md shadow-md scroll-mt-24'
+    >
       {/* top */}
       <div className='text-sm text-slate-800 px-5 pt-5 flex justify-between items-center'>
         <p>{verse.inSurah}</p>
         <VerseMenu
-          surahName={surah.name.transliteration.id}
+          surahName={surahName}
           verseInSurah={verse.inSurah}
+          verseInJuz={verse.meta.juz}
           surahId={surah.id}
           verseId={verse.id}
         />

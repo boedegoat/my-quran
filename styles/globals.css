@@ -24,4 +24,17 @@
   .read-quran-contents {
     @apply grid sm:grid-cols-2 sm:grid-rows-2 gap-5;
   }
+
+  .biglink {
+    @apply block h-full shadow-md p-5 rounded-lg bg-white;
+  }
+  .biglink-label {
+    @apply text-lg sm:text-2xl mb-2 flex items-center;
+  }
+  .biglink-labelSpan {
+    @apply text-slate-900 font-bold w-full;
+  }
+  .biglink-description {
+    @apply text-sm text-slate-500;
+  }
 }
