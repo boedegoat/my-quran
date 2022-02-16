@@ -62,3 +62,8 @@ export async function syncLastRead() {
     return lastReadInLocal
   }
 }
+
+export function getVerseIdFromUrl(url) {
+  var match = url.match(/#.+/)
+  return match ? match[0].replace('#', '') : null
+}
