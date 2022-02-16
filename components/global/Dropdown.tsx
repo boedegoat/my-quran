@@ -2,15 +2,15 @@ import React, { Fragment } from 'react'
 import { Menu as HeadlessMenu, Transition } from '@headlessui/react'
 import NextLink from './NextLink'
 import { IItem } from 'lib/typings/component'
+import { classNames } from 'lib/utils'
 
 const Dropdown = ({ children, toggler }) => {
-  return (
+  const DesktopDropdown = (
     <HeadlessMenu as='div' className='relative inline-block text-left'>
       {({ open }) => (
         <>
           <HeadlessMenu.Button>{toggler}</HeadlessMenu.Button>
           <Transition as='div' className='relative z-50' show={open}>
-            {/* desktop version */}
             <Transition.Child
               as={Fragment}
               enter='transition ease-out duration-100'
@@ -20,12 +20,22 @@ const Dropdown = ({ children, toggler }) => {
               leaveFrom='transform opacity-100 scale-100'
               leaveTo='transform opacity-0 scale-95'
             >
-              <HeadlessMenu.Items className='hidden sm:block absolute right-0 min-w-[150px] max-w-auto mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+              <HeadlessMenu.Items className='absolute right-0 min-w-[150px] max-w-auto mt-2 origin-top-right bg-white divide-y divide-gray-100 rounded-md shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 {children}
               </HeadlessMenu.Items>
             </Transition.Child>
+          </Transition>
+        </>
+      )}
+    </HeadlessMenu>
+  )
 
-            {/* mobile version (coming from bottom) */}
+  const MobileDropdown = (
+    <HeadlessMenu as='div' className='relative inline-block text-left'>
+      {({ open }) => (
+        <>
+          <HeadlessMenu.Button>{toggler}</HeadlessMenu.Button>
+          <Transition as='div' className='relative z-50' show={open}>
             <Transition.Child
               as={Fragment}
               enter='ease-out duration-300'
@@ -36,7 +46,7 @@ const Dropdown = ({ children, toggler }) => {
               leaveTo='opacity-0'
             >
               {/* overlay */}
-              <div className='sm:hidden fixed inset-0 bg-black/50' />
+              <div className='fixed inset-0 bg-black/50' />
             </Transition.Child>
             <Transition.Child
               as={Fragment}
@@ -47,7 +57,7 @@ const Dropdown = ({ children, toggler }) => {
               leaveFrom='transform opacity-100 translate-y-0'
               leaveTo='transform opacity-0 translate-y-10'
             >
-              <HeadlessMenu.Items className='sm:hidden fixed bottom-0 left-0 w-full origin-bottom bg-white divide-y divide-gray-100 rounded-t-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
+              <HeadlessMenu.Items className='fixed bottom-0 left-0 w-full origin-bottom bg-white divide-y divide-gray-100 rounded-t-2xl shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none'>
                 {children}
               </HeadlessMenu.Items>
             </Transition.Child>
@@ -56,31 +66,42 @@ const Dropdown = ({ children, toggler }) => {
       )}
     </HeadlessMenu>
   )
+
+  return (
+    <>
+      <div className='hidden sm:block'>{DesktopDropdown}</div>
+      <div className='block sm:hidden'>{MobileDropdown}</div>
+    </>
+  )
 }
 
 const Item = ({ children, Icon, disabled, type, href, onClick, danger }: IItem) => {
-  const groupStyle = (active: boolean) =>
-    `group flex rounded-md items-center w-full px-2 py-2 text-sm whitespace-nowrap ${
-      active ? `${danger ? 'bg-red-700' : 'bg-slate-800'} text-white` : ''
-    }`
-
-  const iconStyle = (active: boolean) => `mr-3 h-5 w-5 ${active ? 'text-white' : 'text-gray-400'}`
-
   return (
     <HeadlessMenu.Item disabled={disabled}>
-      {({ active, disabled }) =>
-        type === 'link' ? (
-          <NextLink href={href} className={groupStyle(active)}>
-            {Icon && <Icon className={iconStyle(active)} />}
-            {children}
-          </NextLink>
-        ) : (
-          <button onClick={onClick} className={groupStyle(active)}>
-            {Icon && <Icon className={iconStyle(active)} />}
-            {children}
-          </button>
+      {({ active, disabled }) => {
+        const groupStyle = classNames(
+          'group flex rounded-md items-center w-full px-2 py-2 text-sm whitespace-nowrap',
+          active ? `${danger ? 'bg-red-700' : 'bg-slate-800'} text-white` : ''
         )
-      }
+        const iconStyle = classNames('mr-3 h-5 w-5', active ? 'text-white' : 'text-gray-400')
+
+        const MenuMap = {
+          link: (
+            <NextLink href={href} className={groupStyle}>
+              {Icon && <Icon className={iconStyle} />}
+              {children}
+            </NextLink>
+          ),
+          button: (
+            <button onClick={onClick} className={groupStyle}>
+              {Icon && <Icon className={iconStyle} />}
+              {children}
+            </button>
+          ),
+        }
+
+        return MenuMap[type]
+      }}
     </HeadlessMenu.Item>
   )
 }

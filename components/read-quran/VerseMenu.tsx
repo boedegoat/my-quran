@@ -17,6 +17,24 @@ import toast from 'react-hot-toast'
 export default function VerseMenu({ surahName, verseInSurah, surahId, verseId }) {
   const { status } = useSession()
 
+  const markLastRead = async () => {
+    console.log('mark last read')
+    // if user has not signed in
+    if (status === 'unauthenticated') {
+      setLastReadInLocal({ surahName, verseId, surahId, verseInSurah })
+      toast.success(<MarkLastRead {...{ surahName, verseInSurah }} />)
+      return
+    }
+
+    // if user has signed in, update both on local and cloud
+    setLastReadInLocal({ surahName, verseId, surahId, verseInSurah })
+    await toast.promise(updateLastRead(verseId), {
+      loading: 'Tunggu bos...',
+      success: <MarkLastRead {...{ surahName, verseInSurah }} />,
+      error: 'Ada yang error ni bos',
+    })
+  }
+
   return (
     <Dropdown
       toggler={
@@ -31,26 +49,7 @@ export default function VerseMenu({ surahName, verseInSurah, surahId, verseId })
         </p>
       </Dropdown.Group>
       <Dropdown.Group>
-        <Dropdown.Item
-          type='button'
-          Icon={PaperClipIcon}
-          onClick={async () => {
-            // if user has not signed in
-            if (status === 'unauthenticated') {
-              setLastReadInLocal({ surahName, verseId, surahId, verseInSurah })
-              toast.success(<MarkLastRead {...{ surahName, verseInSurah }} />)
-              return
-            }
-
-            // if user has signed in, update both on local and cloud
-            setLastReadInLocal({ surahName, verseId, surahId, verseInSurah })
-            await toast.promise(updateLastRead(verseId), {
-              loading: 'Tunggu bos...',
-              success: <MarkLastRead {...{ surahName, verseInSurah }} />,
-              error: 'Ada yang error ni bos',
-            })
-          }}
-        >
+        <Dropdown.Item type='button' Icon={PaperClipIcon} onClick={markLastRead}>
           Tandai Terakhir Baca
         </Dropdown.Item>
         <Dropdown.Item type='button' Icon={FolderAddIcon}>
