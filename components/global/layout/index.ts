@@ -1,8 +1,2 @@
-import { useContext } from 'react'
-import Layout, { LayoutContext } from './Layout'
-
-export function useLayoutContext() {
-  return useContext(LayoutContext)
-}
-
+import Layout from './Layout'
 export default Layout
