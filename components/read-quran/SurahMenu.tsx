@@ -12,10 +12,7 @@ export default function SurahMenu({ menuOpen, toggleMenuOpen, allSurah }) {
   const { searchSurah, setSearchSurah, searchSurahResults } = useSearchSurah(allSurah)
 
   return (
-    <Modal isOpen={menuOpen} closeModal={() => toggleMenuOpen(false)}>
-      <Modal.Title as='h3' className='font-bold text-2xl'>
-        Menu
-      </Modal.Title>
+    <Modal title='Menu' isOpen={menuOpen} closeModal={() => toggleMenuOpen(false)}>
       <TabGroup className='mt-5'>
         <TabGroup.Head>
           <TabGroup.Tab>Ganti Surat</TabGroup.Tab>
@@ -26,11 +23,11 @@ export default function SurahMenu({ menuOpen, toggleMenuOpen, allSurah }) {
             <SearchBar
               placeholder='Cari Nama atau No. Surat'
               value={searchSurah}
-              onChange={e => setSearchSurah(e.target.value)}
+              onChange={(e) => setSearchSurah(e.target.value)}
             />
             {/* surah list */}
             <div className='mt-5 p-2 border space-y-3 rounded-lg max-h-80 overflow-y-auto'>
-              {(searchSurahResults || allSurah).map(surah => (
+              {(searchSurahResults || allSurah).map((surah) => (
                 <NextLink
                   href={'/read-quran/surah/' + surah.id}
                   key={surah.id}

@@ -68,10 +68,7 @@ export default function LastReadButton() {
 }
 
 const ChooseModal = ({ show, toggleShow, lastRead }) => (
-  <Modal isOpen={show} closeModal={toggleShow}>
-    <Modal.Title as='h3' className='font-bold text-2xl'>
-      Pilih Tampilan
-    </Modal.Title>
+  <Modal isOpen={show} closeModal={toggleShow} title='Pilih Tampilan'>
     <div className='mt-4 h-full flex flex-col space-y-4'>
       <MotionNextLink
         href={`/read-quran/surah/${lastRead.surahId}#${
@@ -107,21 +104,18 @@ const LastReadConfirmationModal = ({
   onChooseCloud,
   onChooseLocal,
 }) => (
-  <Modal isOpen={show} closeModal={onClose}>
-    <Modal.Title as='h3' className='font-bold text-2xl'>
-      Mau bacaan terakhir yang mana ?
-    </Modal.Title>
+  <Modal isOpen={show} closeModal={onClose} title='Mau bacaan terakhir yang mana ?'>
     <div className='mt-4 h-full flex flex-col space-y-4'>
       <button className='flex-1 border rounded-lg shadow-sm' onClick={onChooseCloud}>
         <p className='font-bold text-green-500 text-xs uppercase'>cloud</p>
         <p>
-          {lastRead.surahName} ayat {lastRead.verseInSurah}
+          {lastRead?.surahName} ayat {lastRead?.verseInSurah}
         </p>
       </button>
       <button className='flex-1 border rounded-lg shadow-sm' onClick={onChooseLocal}>
         <p className='font-bold text-orange-500 text-xs uppercase'>local</p>
         <p>
-          {lastReadInLocal.surahName} ayat {lastReadInLocal.verseInSurah}
+          {lastReadInLocal?.surahName} ayat {lastReadInLocal?.verseInSurah}
         </p>
       </button>
     </div>

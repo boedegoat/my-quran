@@ -30,7 +30,7 @@ export async function syncLastRead() {
   const lastRead = await getLastRead()
   const lastReadInLocal = getLastReadInLocal()
 
-  if (lastRead.verseId === lastReadInLocal.verseId) {
+  if (lastRead?.verseId === lastReadInLocal?.verseId) {
     return lastRead
   }
 

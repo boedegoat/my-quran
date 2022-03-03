@@ -2,11 +2,8 @@ import { Dialog } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { motion } from 'framer-motion'
 import { buttonVariants } from 'lib/animations'
-import { classNames } from 'lib/utils'
 
-let onCloseModal = Function()
-function Modal({ isOpen, closeModal, children }) {
-  onCloseModal = closeModal
+function Modal({ isOpen, closeModal, title, children }) {
   return (
     <Dialog
       as='div'
@@ -25,6 +22,9 @@ function Modal({ isOpen, closeModal, children }) {
         {/* modal body */}
         {/* TODO: add open animation */}
         <motion.div className='relative inline-flex flex-col w-full h-screen sm:max-h-[80vh] sm:max-w-md p-6 sm:my-8 overflow-y-auto text-left align-middle transform bg-white shadow-xl sm:rounded-2xl'>
+          <Title as='h3' closeModal={closeModal} className='flex items-center font-bold text-2xl'>
+            {title}
+          </Title>
           {children}
         </motion.div>
         <div className='fixed sm:hidden left-0 bottom-0 wrapper py-3 border-t bg-white w-full'>
@@ -41,16 +41,16 @@ function Modal({ isOpen, closeModal, children }) {
   )
 }
 
-function Title({ children, className, ...rest }) {
+function Title({ children, closeModal, ...rest }) {
   return (
-    <Dialog.Title className={classNames('flex items-center', className)} {...rest}>
+    <Dialog.Title {...rest}>
       {children}{' '}
       <motion.button
         variants={buttonVariants}
         whileHover='hover'
         whileTap='tap'
         className='ml-auto hidden sm:inline-block'
-        onClick={() => onCloseModal()}
+        onClick={() => closeModal()}
       >
         <XIcon className='w-6 h-6 text-slate-500' />
       </motion.button>
