@@ -1,13 +1,12 @@
 import Modal from 'components/global/Modal'
 import MotionNextLink from 'components/global/MotionNextLink'
-import NextLink from 'components/global/NextLink'
 import { motion } from 'framer-motion'
 import { childVariants, linkVariants } from 'lib/animations'
 import { useLastRead, useToggle } from 'lib/hooks'
 
 export default function LastReadButton() {
-  const lastRead = useLastRead()
   const [show, toggleShow] = useToggle(false)
+  const lastRead = useLastRead()
 
   return (
     lastRead && (

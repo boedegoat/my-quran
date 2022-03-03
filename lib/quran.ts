@@ -16,7 +16,6 @@ export function setLastReadInLocal(options: ILastRead) {
 
 export function getLastReadInLocal() {
   const lastRead = JSON.parse(localStorage.getItem(lastReadKey)) as ILastRead
-  if (lastRead) updateLastRead(lastRead.verseId)
   return lastRead
 }
 

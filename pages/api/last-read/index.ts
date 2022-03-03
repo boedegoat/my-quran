@@ -21,6 +21,7 @@ export default apiHandler.get(async (req, res) => {
           inSurah: true,
           id: true,
           surah: { select: { name: true, id: true } },
+          meta: true,
         },
       },
     },
@@ -40,6 +41,8 @@ export default apiHandler.get(async (req, res) => {
       // @ts-ignore
       surahName: lastRead.surah.name.transliteration.id,
       verseInSurah: lastRead.inSurah,
+      // @ts-ignore
+      verseInJuz: lastRead.meta.juz,
     } as ILastRead,
   })
 })

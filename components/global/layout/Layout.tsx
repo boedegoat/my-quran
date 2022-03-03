@@ -29,8 +29,6 @@ export default function Layout({ title, children, variants = null }) {
           {children}
         </MotionContainer>
       </main>
-
-      {/* mobile dropdown */}
     </>
   )
 }

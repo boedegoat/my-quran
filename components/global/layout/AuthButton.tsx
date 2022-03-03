@@ -1,11 +1,5 @@
 import { signIn, signOut, useSession } from 'next-auth/react'
-import {
-  UserIcon,
-  InformationCircleIcon,
-  ExternalLinkIcon,
-  CurrencyDollarIcon,
-  MoonIcon,
-} from '@heroicons/react/solid'
+import { UserIcon, ExternalLinkIcon } from '@heroicons/react/solid'
 import Image from 'next/image'
 import Dropdown from 'components/global/Dropdown'
 import { motion } from 'framer-motion'
@@ -23,20 +17,9 @@ export default function AuthButton() {
         toggler={<Image src={session.user.image} width={30} height={30} className='rounded-full' />}
       >
         <Dropdown.Group>
-          <Dropdown.Item type='button' Icon={MoonIcon}>
-            Dark Theme
-          </Dropdown.Item>
           <Dropdown.Item type='link' href='/profile' Icon={UserIcon}>
             Profile
           </Dropdown.Item>
-          <Dropdown.Item type='link' href='/about' Icon={InformationCircleIcon}>
-            About
-          </Dropdown.Item>
-          <Dropdown.Item type='button' Icon={CurrencyDollarIcon}>
-            Donate
-          </Dropdown.Item>
-        </Dropdown.Group>
-        <Dropdown.Group>
           <Dropdown.Item type='button' onClick={() => signOut()} danger Icon={ExternalLinkIcon}>
             Sign Out
           </Dropdown.Item>

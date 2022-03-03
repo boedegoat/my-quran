@@ -1,16 +1,11 @@
 import Layout from 'components/global/layout'
 import prisma from 'lib/prisma'
-import { useScrollIntoVerse, useSessionListener } from 'lib/hooks'
-import { useSession } from 'next-auth/react'
-import { syncLastRead } from 'lib/quran'
+import { useScrollIntoVerse } from 'lib/hooks'
 import SurahVerses from 'components/read-quran/SurahVerses'
 import SurahDetails from 'components/read-quran/SurahDetails'
 import TopMenu from 'components/read-quran/TopMenu'
 
 export default function Surah({ surah, allSurah }) {
-  const { status } = useSession()
-
-  useSessionListener(status, 'authenticated', syncLastRead)
   useScrollIntoVerse()
 
   return (
