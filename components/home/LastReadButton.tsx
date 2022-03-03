@@ -3,10 +3,33 @@ import MotionNextLink from 'components/global/MotionNextLink'
 import { motion } from 'framer-motion'
 import { childVariants, linkVariants } from 'lib/animations'
 import { useLastRead, useToggle } from 'lib/hooks'
+import { setLastReadInLocal, updateLastRead } from 'lib/quran'
 
 export default function LastReadButton() {
   const [show, toggleShow] = useToggle(false)
-  const lastRead = useLastRead()
+  const { lastRead, setLastRead, showPrompt, setShowPrompt, lastReadInLocal } = useLastRead()
+
+  const onConfirmationClose = () => {
+    if (
+      confirm(
+        'Jika anda close, maka terakhir baca anda di local akan hilang dan digantikan dengan di cloud'
+      )
+    ) {
+      setLastReadInLocal(lastRead)
+      setShowPrompt(false)
+    }
+  }
+
+  const onChooseCloud = () => {
+    setLastReadInLocal(lastRead)
+    setShowPrompt(false)
+  }
+
+  const onChooseLocal = async () => {
+    await updateLastRead(lastReadInLocal.verseId)
+    setLastRead(lastReadInLocal)
+    setShowPrompt(false)
+  }
 
   return (
     lastRead && (
@@ -30,36 +53,77 @@ export default function LastReadButton() {
             </p>
           </motion.button>
         </motion.div>
-        <Modal isOpen={show} closeModal={toggleShow}>
-          <Modal.Title as='h3' className='font-bold text-2xl'>
-            Pilih Tampilan
-          </Modal.Title>
-          <div className='mt-4 h-full flex flex-col space-y-4'>
-            <MotionNextLink
-              href={`/read-quran/surah/${lastRead.surahId}#${
-                lastRead.surahName + '-' + lastRead.verseInSurah
-              }`}
-              variants={linkVariants}
-              whileHover='hover'
-              whileTap='tap'
-              className='flex-1 flex items-center justify-center shadow-md text-slate-800 font-medium rounded-md text-lg'
-            >
-              📖 Buka sebagai surah
-            </MotionNextLink>
-            <MotionNextLink
-              href={`/read-quran/juz/${lastRead.verseInJuz}#${
-                lastRead.surahName + '-' + lastRead.verseInSurah
-              }`}
-              variants={linkVariants}
-              whileHover='hover'
-              whileTap='tap'
-              className='flex-1 flex items-center justify-center shadow-md text-slate-800 font-medium rounded-md text-lg'
-            >
-              📖 Buka sebagai juz
-            </MotionNextLink>
-          </div>
-        </Modal>
+        <ChooseModal show={show} toggleShow={toggleShow} lastRead={lastRead} />
+        <LastReadConfirmationModal
+          show={showPrompt}
+          onChooseCloud={onChooseCloud}
+          onChooseLocal={onChooseLocal}
+          onClose={onConfirmationClose}
+          lastRead={lastRead}
+          lastReadInLocal={lastReadInLocal}
+        />
       </>
     )
   )
 }
+
+const ChooseModal = ({ show, toggleShow, lastRead }) => (
+  <Modal isOpen={show} closeModal={toggleShow}>
+    <Modal.Title as='h3' className='font-bold text-2xl'>
+      Pilih Tampilan
+    </Modal.Title>
+    <div className='mt-4 h-full flex flex-col space-y-4'>
+      <MotionNextLink
+        href={`/read-quran/surah/${lastRead.surahId}#${
+          lastRead.surahName + '-' + lastRead.verseInSurah
+        }`}
+        variants={linkVariants}
+        whileHover='hover'
+        whileTap='tap'
+        className='flex-1 flex items-center justify-center shadow-md text-slate-800 font-medium rounded-md text-lg'
+      >
+        📖 Buka sebagai surah
+      </MotionNextLink>
+      <MotionNextLink
+        href={`/read-quran/juz/${lastRead.verseInJuz}#${
+          lastRead.surahName + '-' + lastRead.verseInSurah
+        }`}
+        variants={linkVariants}
+        whileHover='hover'
+        whileTap='tap'
+        className='flex-1 flex items-center justify-center shadow-md text-slate-800 font-medium rounded-md text-lg'
+      >
+        📖 Buka sebagai juz
+      </MotionNextLink>
+    </div>
+  </Modal>
+)
+
+const LastReadConfirmationModal = ({
+  show,
+  lastRead,
+  lastReadInLocal,
+  onClose,
+  onChooseCloud,
+  onChooseLocal,
+}) => (
+  <Modal isOpen={show} closeModal={onClose}>
+    <Modal.Title as='h3' className='font-bold text-2xl'>
+      Mau bacaan terakhir yang mana ?
+    </Modal.Title>
+    <div className='mt-4 h-full flex flex-col space-y-4'>
+      <button className='flex-1 border rounded-lg shadow-sm' onClick={onChooseCloud}>
+        <p className='font-bold text-green-500 text-xs uppercase'>cloud</p>
+        <p>
+          {lastRead.surahName} ayat {lastRead.verseInSurah}
+        </p>
+      </button>
+      <button className='flex-1 border rounded-lg shadow-sm' onClick={onChooseLocal}>
+        <p className='font-bold text-orange-500 text-xs uppercase'>local</p>
+        <p>
+          {lastReadInLocal.surahName} ayat {lastReadInLocal.verseInSurah}
+        </p>
+      </button>
+    </div>
+  </Modal>
+)

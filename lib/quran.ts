@@ -23,12 +23,7 @@ export async function getLastRead() {
   const res = await fetch('/api/last-read')
   const { lastRead }: { lastRead: ILastRead } = await res.json()
   if (!lastRead) return null
-  setLastReadInLocal(lastRead)
   return lastRead as ILastRead
-}
-
-export function resetLastRead() {
-  localStorage.removeItem(lastReadKey)
 }
 
 export async function syncLastRead() {
@@ -39,16 +34,19 @@ export async function syncLastRead() {
     return lastRead
   }
 
+  // if cloud last read exist, use it
   if (lastRead) {
     console.log('updating user last read (cloud -> local storage)...')
-    setLastReadInLocal(lastRead)
-    console.log('updated user last read')
+    if (!lastReadInLocal) {
+      setLastReadInLocal(lastRead)
+    }
     return lastRead
-  } else {
+  }
+  // otherwise, use local last read then use it to update the cloud last read
+  else {
     if (!lastReadInLocal) return null
     console.log('updating user last read (local storage -> cloud)...')
     await updateLastRead(lastReadInLocal.verseId)
-    console.log('updated user last read')
     return lastReadInLocal
   }
 }

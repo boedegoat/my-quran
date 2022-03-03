@@ -5,7 +5,7 @@ module.exports = {
   theme: {
     fontFamily: {
       sans: ['Readex Pro', ...defaultTheme.fontFamily.sans],
-      arab: 'noorhidayat',
+      arab: ['noorhidayat', ...defaultTheme.fontFamily.sans],
     },
     extend: {},
   },

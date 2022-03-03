@@ -4,7 +4,6 @@ import Image from 'next/image'
 import Dropdown from 'components/global/Dropdown'
 import { motion } from 'framer-motion'
 import { buttonVariants } from 'lib/animations'
-import { resetLastRead } from 'lib/quran'
 
 export default function AuthButton() {
   const { data: session, status } = useSession()
@@ -34,7 +33,6 @@ export default function AuthButton() {
       whileHover='hover'
       whileTap='tap'
       onClick={() => {
-        resetLastRead()
         signIn()
       }}
     >
