@@ -9,7 +9,7 @@ export const useOnTopPage = () => {
       if (scrollY === 0) {
         setOnTop(true)
       } else {
-        if (onTop) setOnTop(false)
+        setOnTop(false)
       }
     }
 

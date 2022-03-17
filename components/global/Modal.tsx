@@ -21,7 +21,7 @@ function Modal({ isOpen, closeModal, title, children }) {
 
         {/* modal body */}
         {/* TODO: add open animation */}
-        <motion.div className='relative inline-flex flex-col w-full h-screen sm:max-h-[80vh] sm:max-w-md p-6 sm:my-8 overflow-y-auto text-left align-middle transform bg-white shadow-xl sm:rounded-2xl'>
+        <motion.div className='relative inline-flex pb-24 sm:pb-6 flex-col w-full h-screen sm:max-h-[600px] sm:h-[80vh] sm:max-w-md p-6 sm:my-8 overflow-y-auto text-left align-middle transform bg-white shadow-xl sm:rounded-2xl'>
           <Title as='h3' closeModal={closeModal} className='flex items-center font-bold text-2xl'>
             {title}
           </Title>
