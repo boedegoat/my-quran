@@ -36,7 +36,7 @@ function SurahName({ name }) {
   return (
     <span className='flex'>
       {name.transliteration.id}{' '}
-      <span className='opacity-50 ml-auto'>{name.short}</span>
+      <span className='opacity-50 ml-auto font-arab font-bold text-2xl'>{name.short}</span>
     </span>
   )
 }

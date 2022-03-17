@@ -8,7 +8,7 @@ export default function SurahDetails({ surah }) {
   return (
     <motion.header variants={childVariants} className='space-y-4'>
       <div className='font-bold text-center'>
-        <h1 className='text-slate-900 text-3xl'>{surah.name.long}</h1>
+        <h1 className='text-slate-900 text-4xl font-arab font-bold'>{surah.name.long}</h1>
         <h2 className='text-slate-800/50 text-xl mt-2'>
           {surah.id}. {surah.name.transliteration.id}
         </h2>

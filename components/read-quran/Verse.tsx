@@ -11,7 +11,7 @@ export default function Verse({ verse, surah }) {
     >
       {/* top */}
       <div className='text-sm text-slate-800 px-5 pt-5 flex justify-between items-center'>
-        <p>{verse.inSurah}</p>
+        <p className='font-bold text-slate-500'>{verse.inSurah}</p>
         <VerseMenu
           surahName={surahName}
           verseInSurah={verse.inSurah}
@@ -22,7 +22,9 @@ export default function Verse({ verse, surah }) {
       </div>
       {/* body */}
       <div className='p-5 text-right'>
-        <p className='mb-5 text-3xl sm:text-4xl font-medium font-arab'>{verse.text.arab}</p>
+        <p className='mb-5 text-4xl sm:text-5xl leading-[1.6] sm:leading-[1.6] font-arab'>
+          {verse.text.arab}
+        </p>
         <div className='text-sm sm:text-lg text-slate-500 space-y-4'>
           <p className='text-slate-700 font-medium'>{verse.text.transliteration.en}</p>
           <p>{verse.translation.id}</p>
