@@ -8,7 +8,7 @@ function Modal({ isOpen, closeModal, title, children }) {
     <Dialog
       as='div'
       open={isOpen}
-      className='fixed inset-0 z-50 overflow-y-auto'
+      className='modal fixed inset-0 z-50 overflow-y-auto'
       onClose={() => closeModal()}
     >
       <div className='min-h-screen sm:px-4 text-center'>

@@ -5,6 +5,20 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar {
+  width: 0.5em;
+  height: 0.5em;
+}
+
+::-webkit-scrollbar-track {
+  margin-block: 0.5em;
+}
+
+::-webkit-scrollbar-thumb {
+  @apply bg-slate-600 hover:bg-slate-500;
+  border-radius: 100vw;
+}
+
 @layer base {
   body {
     @apply bg-slate-50;
